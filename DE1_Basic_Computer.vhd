@@ -59,8 +59,12 @@ port (
 	DRAM_CS_N			 : out std_logic;
 	DRAM_WE_N			 : out std_logic;
 	DRAM_UDQM			 : buffer std_logic;
-	DRAM_LDQM			 : buffer std_logic
+	DRAM_LDQM			 : buffer std_logic;
+	
+	to_hex_export                        : out   std_logic_vector(15 downto 0)
 	);
+
+
 end DE1_Basic_Computer;
 
 
@@ -84,9 +88,7 @@ architecture DE1_Basic_Computer_rtl of DE1_Basic_Computer is
               -- the_Green_LEDs
                  signal LEDG_from_the_Green_LEDs : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
 
-              -- the_HEX3_HEX0
-                 signal HEX0_from_the_HEX3_HEX0 : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
-                 signal HEX1_from_the_HEX3_HEX0 : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
+              -- the_HEX3_HEX2
                  signal HEX2_from_the_HEX3_HEX0 : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
                  signal HEX3_from_the_HEX3_HEX0 : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
 
@@ -121,7 +123,9 @@ architecture DE1_Basic_Computer_rtl of DE1_Basic_Computer is
                  signal zs_dq_to_and_from_the_sdram : INOUT STD_LOGIC_VECTOR (15 DOWNTO 0);
                  signal zs_dqm_from_the_sdram : BUFFER STD_LOGIC_VECTOR (1 DOWNTO 0);
                  signal zs_ras_n_from_the_sdram : OUT STD_LOGIC;
-                 signal zs_we_n_from_the_sdram : OUT STD_LOGIC
+                 signal zs_we_n_from_the_sdram : OUT STD_LOGIC;
+					  
+					  signal reg16_hex_export : OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
               );
 	end component;
 	
@@ -131,6 +135,13 @@ architecture DE1_Basic_Computer_rtl of DE1_Basic_Computer is
 				 signal c0 : OUT STD_LOGIC;
 				 signal c1 : OUT STD_LOGIC
 			 );
+	end component;
+	
+	component hex7seg is
+    port (
+        hex     : in  std_logic_vector(3 downto 0);
+        display : out std_logic_vector(6 downto 0)
+    );
 	end component;
 
 -------------------------------------------------------------------------------
@@ -148,6 +159,7 @@ signal			 system_clock : STD_LOGIC;
 signal			 BA : STD_LOGIC_VECTOR(1 DOWNTO 0);
 signal			 DQM : STD_LOGIC_VECTOR(1 DOWNTO 0);
 
+signal reg16_out : std_logic_vector(15 downto 0);
 -- Internal Registers
 
 -- State Machine Registers
@@ -220,9 +232,7 @@ NiosII : nios_system
 		-- the_Red_LEDs
 		LEDR_from_the_Red_LEDs 					=> LEDR,
 		
-		-- the_HEX3_HEX0
-		HEX0_from_the_HEX3_HEX0 				=> HEX0,
-		HEX1_from_the_HEX3_HEX0 				=> HEX1,
+		-- the_HEX3_HEX2
 		HEX2_from_the_HEX3_HEX0 				=> HEX2,
 		HEX3_from_the_HEX3_HEX0 				=> HEX3,
 		
@@ -248,7 +258,9 @@ NiosII : nios_system
 		zs_dq_to_and_from_the_sdram				=> DRAM_DQ,
 		zs_dqm_from_the_sdram					=> DQM,
 		zs_ras_n_from_the_sdram					=> DRAM_RAS_N,
-		zs_we_n_from_the_sdram					=> DRAM_WE_N
+		zs_we_n_from_the_sdram					=> DRAM_WE_N,
+		
+		to_hex_export => reg16_out
 	);
 	
 neg_3ns : sdram_pll
@@ -257,6 +269,8 @@ neg_3ns : sdram_pll
 		c0										=> DRAM_CLK,
 		c1										=> system_clock
 	);
+	h0 : hex7seg port map (reg16_out(3 downto 0), HEX0);
+	h1 : hex7seg port map (reg16_out(7 downto 4), HEX1);
 
 end DE1_Basic_Computer_rtl;
 

@@ -1,0 +1,41 @@
+# Ignore everything by default
+/*
+
+# ── Project definition ────────────────────────────────
+!*.qpf          # Quartus project file
+!*.qsf          # Settings & constraints (pin assignments, device, timing)
+!*.qws          # GUI window layout (optional, can omit if you don't care)
+
+# ── HDL source files ──────────────────────────────────
+!*.v            # Verilog
+!*.sv           # SystemVerilog
+!*.vhd          # VHDL
+!*.vhdl
+
+# ── Constraint & IP files ─────────────────────────────
+!*.sdc          # Synopsys Design Constraints (timing)
+!*.tcl          # Tcl scripts (e.g. automation, Platform Designer)
+!*.qip          # IP inclusion file
+!*.ip           # Platform Designer IP file
+!*.qsys         # Qsys / Platform Designer system file
+!*.bsf          # Block Symbol File (if using schematic editor)
+!*.bdf          # Block Diagram File (schematic top-level)
+
+# ── Memory init files ─────────────────────────────────
+!*.mif          # Memory Initialization File
+!*.hex          # Intel HEX memory init
+
+# ── Bitstream (optional, usually large) ───────────────
+# Uncomment if you want to track the compiled output:
+# !*.sof        # SRAM Object File (FPGA config bitstream)
+# !*.pof        # Programmer Object File (flash programming)
+
+# ── Keep .gitignore itself ────────────────────────────
+!.gitignore
+
+# ── Generated/build directories to always exclude ─────
+db/
+incremental_db/
+output_files/
+simulation/
+hps_isw_handoff/
