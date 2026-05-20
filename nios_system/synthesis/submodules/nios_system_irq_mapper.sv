@@ -11,18 +11,18 @@
 // agreement for further details.
 
 
-// $Id: //acds/rel/13.0sp1/ip/merlin/altera_irq_mapper/altera_irq_mapper.sv.terp#1 $
+// $Id: //acds/rel/13.1/ip/merlin/altera_irq_mapper/altera_irq_mapper.sv.terp#1 $
 // $Revision: #1 $
-// $Date: 2013/03/07 $
+// $Date: 2013/08/11 $
 // $Author: swbranch $
 
 // -------------------------------------------------------
 // Altera IRQ Mapper
 //
 // Parameters
-//   NUM_RCVRS        : 6
+//   NUM_RCVRS        : 1
 //   SENDER_IRW_WIDTH : 32
-//   IRQ_MAP          : 0:8,1:0,2:10,3:1,4:11,5:12
+//   IRQ_MAP          : 0:5
 //
 // -------------------------------------------------------
 
@@ -40,11 +40,6 @@ module nios_system_irq_mapper
     // IRQ Receivers
     // -------------------
     input                receiver0_irq,
-    input                receiver1_irq,
-    input                receiver2_irq,
-    input                receiver3_irq,
-    input                receiver4_irq,
-    input                receiver5_irq,
 
     // -------------------
     // Command Source (Output)
@@ -56,12 +51,7 @@ module nios_system_irq_mapper
     always @* begin
 	sender_irq = 0;
 
-        sender_irq[8] = receiver0_irq;
-        sender_irq[0] = receiver1_irq;
-        sender_irq[10] = receiver2_irq;
-        sender_irq[1] = receiver3_irq;
-        sender_irq[11] = receiver4_irq;
-        sender_irq[12] = receiver5_irq;
+        sender_irq[5] = receiver0_irq;
     end
 
 endmodule

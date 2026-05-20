@@ -18,7 +18,7 @@
 // altera message_level Level1 
 // altera message_off 10034 10035 10036 10037 10230 10240 10030 
 
-module nios_system_cpu_jtag_debug_module_tck (
+module nios_system_CPU_jtag_debug_module_tck (
                                                // inputs:
                                                 MonDReg,
                                                 break_readreg,
@@ -128,8 +128,7 @@ module nios_system_cpu_jtag_debug_module_tck (
               end // 2'b10 
           
               2'b11: begin
-                  sr[15 : 12] <= 1'b0;
-                  sr[11 : 2] <= trc_im_addr;
+                  sr[15 : 2] <= trc_im_addr;
                   sr[1] <= trc_wrap;
                   sr[0] <= trc_on;
               end // 2'b11 

@@ -1,41 +1,72 @@
-# Ignore everything by default
-/*
-
-# ── Project definition ────────────────────────────────
-!*.qpf          # Quartus project file
-!*.qsf          # Settings & constraints (pin assignments, device, timing)
-!*.qws          # GUI window layout (optional, can omit if you don't care)
-
-# ── HDL source files ──────────────────────────────────
-!*.v            # Verilog
-!*.sv           # SystemVerilog
-!*.vhd          # VHDL
-!*.vhdl
-
-# ── Constraint & IP files ─────────────────────────────
-!*.sdc          # Synopsys Design Constraints (timing)
-!*.tcl          # Tcl scripts (e.g. automation, Platform Designer)
-!*.qip          # IP inclusion file
-!*.ip           # Platform Designer IP file
-!*.qsys         # Qsys / Platform Designer system file
-!*.bsf          # Block Symbol File (if using schematic editor)
-!*.bdf          # Block Diagram File (schematic top-level)
-
-# ── Memory init files ─────────────────────────────────
-!*.mif          # Memory Initialization File
-!*.hex          # Intel HEX memory init
-
-# ── Bitstream (optional, usually large) ───────────────
-# Uncomment if you want to track the compiled output:
-# !*.sof        # SRAM Object File (FPGA config bitstream)
-# !*.pof        # Programmer Object File (flash programming)
-
-# ── Keep .gitignore itself ────────────────────────────
-!.gitignore
-
-# ── Generated/build directories to always exclude ─────
+# ─── Quartus Compilation Output ───────────────────────────────
 db/
 incremental_db/
 output_files/
 simulation/
 hps_isw_handoff/
+
+# ─── Greybox & Synthesis Temp ─────────────────────────────────
+greybox_tmp/
+rtl_work/
+
+# ─── QSys / Platform Designer Generated Files ─────────────────
+*.sopcinfo
+*_bb.v
+*_inst.v
+*_inst.vhd
+hps_sdram_p0_summary.csv
+*.qip
+*.sip
+
+# Keep hand-written .qsys but ignore generated output folders
+# (delete the next line if you want to track .qsys too)
+# *.qsys
+
+# ─── Timing & Reports ─────────────────────────────────────────
+*.rpt
+*.smsg
+*.summary
+*.jdi
+*.pin
+
+# ─── Programmer / JTAG ────────────────────────────────────────
+*.cdf
+*.pof
+*.sof
+*.rbf
+*.jic
+
+# ─── Qsys-generated HDL ───────────────────────────────────────
+*_gen/
+synthesis/
+
+# ─── ModelSim / Questa ────────────────────────────────────────
+work/
+transcript
+vsim.wlf
+*.vcd
+*.wlf
+
+# ─── Nios II / Eclipse ────────────────────────────────────────
+software/*/Debug/
+software/*/Release/
+software/*/.metadata/
+*.elf
+*.objdump
+
+# ─── Misc OS & Editor ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.log
+*~
+
+# ─── What to KEEP (explicit) ──────────────────────────────────
+!*.qpf        # Project file
+!*.qsf        # Settings / pin assignments
+!*.v          # Verilog source
+!*.vhd        # VHDL source
+!*.sdc        # Timing constraints
+!*.qsys       # Platform Designer system
+!*.tcl        # Tcl scripts
